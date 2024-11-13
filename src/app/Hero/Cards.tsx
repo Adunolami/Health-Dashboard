@@ -14,25 +14,25 @@ import {
 import { BsStar, BsStarFill, BsStarHalf } from 'react-icons/bs'
 import { FiShoppingCart } from 'react-icons/fi'
 
-const data = {
-  isNew: true,
-  imageURL:
-    'https://images.unsplash.com/photo-1572635196237-14b3f281503f?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=4600&q=80',
-  name: 'Wayfarer Classic',
-  price: 4.5,
-  rating: 4.2,
-  numReviews: 34,
-}
-
 interface RatingProps {
   rating: number
   numReviews: number
 }
-interface CardProps{
-    icons: string
-    title: string
-    subTitle: string
-    condition: string
+
+interface CardData {
+  isNew: boolean
+  imageURL: string
+  name: string
+  price: number
+  rating: number
+  numReviews: number
+}
+
+interface CardProps {
+  data?: CardData
+  title: string
+  subTitle: string
+  condition: string
 }
 
 function Rating({ rating, numReviews }: RatingProps) {
@@ -63,7 +63,16 @@ function Rating({ rating, numReviews }: RatingProps) {
   )
 }
 
-function Cards ({icons, title, subTitle, condition, children }: CardProps) {
+function Cards({ data, title, subTitle, condition }: CardProps) {
+  const cardData = data || {
+    isNew: false,
+    imageURL: '',
+    name: '',
+    price: 0,
+    rating: 0,
+    numReviews: 0,
+  }
+
   return (
     <Flex p={50} w="full" alignItems="center" justifyContent="center">
       <Box
@@ -73,15 +82,15 @@ function Cards ({icons, title, subTitle, condition, children }: CardProps) {
         rounded="lg"
         shadow="lg"
         position="relative">
-        {data.isNew && (
+        {cardData.isNew && (
           <Circle size="10px" position="absolute" top={2} right={2} bg="red.200" />
         )}
 
-        <Image src={icons} alt={`Picture of ${data.name}`} roundedTop="lg" />
+        <Image src={cardData.imageURL} alt={`Picture of ${cardData.name}`} roundedTop="lg" />
 
         <Box p="6">
           <Box display="flex" alignItems="baseline">
-            {data.isNew && (
+            {cardData.isNew && (
               <Badge rounded="full" px="2" fontSize="0.8em" colorScheme="red">
                 {condition}
               </Badge>
@@ -109,7 +118,7 @@ function Cards ({icons, title, subTitle, condition, children }: CardProps) {
           </Flex>
 
           <Flex justifyContent="space-between" alignContent="center">
-            <Rating rating={data.rating} numReviews={data.numReviews} />
+            <Rating rating={cardData.rating} numReviews={cardData.numReviews} />
             <Box fontSize="2xl" color={useColorModeValue('gray.800', 'white')}>
               <Box as="span" color={'gray.600'} fontSize="lg">
                 £

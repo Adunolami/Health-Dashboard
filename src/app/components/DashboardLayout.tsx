@@ -15,7 +15,6 @@ const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
         <Flex>
             <Sidebar />
             <SidebarWithHeader />
-            <WeightChart />
             
             <Box flex="1" p={4}>
                 {children}

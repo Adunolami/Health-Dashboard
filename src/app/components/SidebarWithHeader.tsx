@@ -216,29 +216,18 @@ const SidebarWithHeader = () => {
       {/* mobilenav */}
       <MobileNav onOpen={onOpen} />
       <Flex>
-      <Box ml={{ base: 0, md: 60 }} p="4">
-        {/* Content */}
-        <Flex>
-          <Dashboard />
-          <Box>
-          <Cards
-          icons="https://blog.nasm.org/hubfs/fitness-trends.jpg"
-          title="SET GOALS AND MOTIVATE YOURSELF"
-          subTitle=""
-          condition="" />
-          
-
+        <Box ml={{ base: 0, md: 60 }} p="4">
+          {/* Content */}
+          <Flex>
+            <Dashboard />
+            <Box>
+              
+            </Box>
+          </Flex>
         </Box>
-        </Flex>
-       
-        
-        
-        
-        
-      </Box>
       </Flex>
     </Box>
   )
 }
 
-export default SidebarWithHeader
+export default SidebarWithHeader;
