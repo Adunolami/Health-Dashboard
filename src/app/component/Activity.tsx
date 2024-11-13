@@ -1,43 +1,53 @@
-// components/Activity.tsx
-import { Box, Flex, Heading, Text, ResponsiveValue, useBreakpointValue } from '@chakra-ui/react';
-import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+'use client';
 
-const data = [
-  { day: 'Sun', value: 10 },
-  { day: 'Mon', value: 15 },
-  { day: 'Tue', value: 12 },
-  { day: 'Wed', value: 20 },
-  { day: 'Thu', value: 18 },
-  { day: 'Fri', value: 22 },
-  { day: 'Sat', value: 16 },
-];
+import { Bar } from 'react-chartjs-2';
+import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, ChartOptions } from 'chart.js';
+import { FC } from 'react';
 
-const Activity: React.FC = () => {
-  const height: ResponsiveValue<number> = useBreakpointValue({
-    base: 300,
-    md: 400,
-    lg: 500,
-  });
+// Register chart.js modules
+ChartJS.register(BarElement, CategoryScale, LinearScale);
 
+const ActivityChart: FC = () => {
+  const data = {
+    labels: ['January', 'February', 'March', 'April', 'May'],
+    datasets: [
+      {
+        label: 'Activity',
+        data: [65, 59, 80, 81, 56],
+        backgroundColor: 'rgba(75, 192, 192, 0.2)',
+        borderColor: 'rgba(75, 192, 192, 1)',
+        borderWidth: 1,
+      },
+    ],
+  };
+
+  const options: ChartOptions<'bar'> = {
+    responsive: true, // Ensure chart is responsive
+    maintainAspectRatio: false, // Allow chart to fill container
+    plugins: {
+      legend: {
+        position: 'top',
+      },
+    },
+    scales: {
+      x: {
+        ticks: {
+          maxRotation: 0,
+          minRotation: 0,
+        },
+      },
+      y: {
+        beginAtZero: true,
+      },
+    },
+  };
+
+  // Ensure height and width are explicitly defined and not undefined
   return (
-    <Box bg="white" p={6} borderRadius="lg" shadow="lg">
-      <Flex justify="space-between" align="center" mb={4}>
-        <Heading as="h2" size="lg">
-          Activity
-        </Heading>
-      </Flex>
-      <ResponsiveContainer width="100%" height={height}>
-        <LineChart data={data}>
-          <XAxis dataKey="day" />
-          <YAxis />
-          <CartesianGrid strokeDasharray="3 3" />
-          <Tooltip />
-          <Legend />
-          <Line type="monotone" dataKey="value" stroke="#8884d8" />
-        </LineChart>
-      </ResponsiveContainer>
-    </Box>
+    <div style={{ width: '100%', height: '500px' }}>
+      <Bar data={data} options={options} />
+    </div>
   );
 };
 
-export default Activity;
+export default ActivityChart
